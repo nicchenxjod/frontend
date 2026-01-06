@@ -1,7 +1,6 @@
 import { LayoutDashboard, Shield, Gift, Settings, LogOut, Coins } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 interface SidebarProps {
@@ -16,19 +15,6 @@ const navItems = [
 ];
 
 const Sidebar = ({ coins }: SidebarProps) => {
-  const { signOut } = useAuth();
-  const navigate = useNavigate();
-
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-      navigate("/auth");
-      toast.success("Signed out successfully");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to sign out");
-    }
-  };
-
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-sidebar border-r border-sidebar-border flex flex-col">
       {/* Logo and Brand */}
@@ -75,17 +61,6 @@ const Sidebar = ({ coins }: SidebarProps) => {
           ))}
         </ul>
       </nav>
-
-      {/* Sign Out */}
-      <div className="p-3 border-t border-sidebar-border">
-        <button 
-          onClick={handleSignOut}
-          className="sidebar-item w-full text-destructive hover:text-destructive hover:bg-destructive/10"
-        >
-          <LogOut className="w-5 h-5" />
-          <span>Sign Out</span>
-        </button>
-      </div>
     </aside>
   );
 };
